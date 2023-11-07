@@ -3,5 +3,5 @@
 int main()
 {
     ConvertGIS2Radar();
-    //ConvertRtoG();
+    ConvertRtoG();
 }

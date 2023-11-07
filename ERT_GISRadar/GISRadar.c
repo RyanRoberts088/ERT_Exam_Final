@@ -1,6 +1,7 @@
 #include "GISRadar.h"
 #include "math.h"
 #include <stdio.h>
+#include <string.h> 
 
 #define EPSILON 0.0001
 
@@ -46,12 +47,19 @@ int GIS2Radar(double* range, double* bearing, double glonInit,
 	}
 
 	(*range) = Ad * R;
+
+	if (*bearing < 0)
+		(*bearing) += 360.0;
+
 	return iter >= maxIter;
 }
 
 int RtoG(double range, double bearing, double glonInit,
 	double glatInit, double* glonFinal,	double* glatFinal)
 {
+	if (bearing > 180)
+		bearing -= 360;
+
 	double la1 = glatInit * degToRad;
 	double Ad = range / R;
 	double theta = bearing * degToRad;
@@ -63,7 +71,7 @@ int RtoG(double range, double bearing, double glonInit,
 	return 0;
 }
 
-void ConvertGIS2Radar()
+EXPORT void ConvertGIS2Radar()
 {
 	printf("Enter first latitude and direction (1 for south or 0 for north): \n");
 	double lat1; int dir1;
@@ -98,7 +106,7 @@ void ConvertGIS2Radar()
 	printf("Range: %lf miles\n", range);
 }
 
-void ConvertRtoG()
+EXPORT void ConvertRtoG()
 {
 	printf("Enter first latitude and direction (1 for south or 0 for north): \n");
 	double lat1; int dir1;
@@ -119,6 +127,19 @@ void ConvertRtoG()
 	double lon2; double lat2;
 	int res = RtoG(range, bearing, lon1, lat1, &lon2, &lat2);
 
-	printf("Latitude: %lf degrees\n", lat2);
-	printf("Longitude: %lf degrees\n", lon2);
+	char latStr[50] = "Latitude: %lf degrees ";
+	char lonStr[50] = "Longitude: %lf degrees ";
+
+	if (lat2 < 0)
+		strcat(latStr, "S\n");
+	else
+		strcat(latStr, "N\n");
+
+	if (lon2 < 0)
+		strcat(lonStr, "W\n");
+	else
+		strcat(lonStr, "E\n");
+
+	printf(latStr, fabs(lat2));
+	printf(lonStr, fabs(lon2));
 }

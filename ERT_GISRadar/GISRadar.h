@@ -1,6 +1,7 @@
 
 #ifndef GISRADAR_H
 #define GISRADAR_H
+#define EXPORT __declspec(dllexport)
 
 int GIS2Radar(double* range,
 	double* bearing,
@@ -16,8 +17,8 @@ int RtoG(double range,
 	double* glonFinal,
 	double* glatFinal);
 
-void ConvertGIS2Radar();
+EXPORT void ConvertGIS2Radar();
 
-void ConvertRtoG();
+EXPORT void ConvertRtoG();
 
 #endif
