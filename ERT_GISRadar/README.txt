@@ -20,7 +20,7 @@ int RtoG (double range,
           double *glatFinal)
 		  
 Additionally, there are two methods providing command line
-dialog to enter either the necessary data to use either 
+dialog to enter the necessary data to use either 
 GIS2Radar (ConvertGIS2Radar) or (ConvertRtoG). 
 
 In addition to the library GISRadar.dll, an example executable
